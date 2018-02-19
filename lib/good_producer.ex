@@ -28,13 +28,6 @@ defmodule GoodProducer do
   def handle_call({:notify, new_events}, _from, buffer) do
     buffer = SimpleDemandBuffer.add_events(buffer, new_events)
 
-#    if SimpleDemandBuffer.pending_demand?(buffer) do
-#      {events, buffer} = SimpleDemandBuffer.get_pending_demand(buffer)
-#      {:reply, :ok, events, buffer}
-#    else
-#      {:reply, :ok, [], buffer}
-#    end
-
     case SimpleDemandBuffer.get_pending_demand(buffer) do
       {:ok, buffer, []} -> {:reply, :ok, [], buffer}
       {events, buffer} -> {:reply, :ok, events, buffer}
