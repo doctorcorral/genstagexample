@@ -40,12 +40,6 @@ defmodule GoodProducer do
     Logger.debug("#{__MODULE__} incoming demand: #{demand}")
     buffer = SimpleDemandBuffer.register_demand(buffer, demand)
 
-#    if SimpleDemandBuffer.pending_demand?(buffer) do
-#      {events, buffer} = SimpleDemandBuffer.get_pending_demand(buffer)
-#      {:noreply, events, buffer}
-#    else
-#      {:noreply, [], buffer}
-#    end
 
     case SimpleDemandBuffer.get_pending_demand(buffer) do
       {:ok, buffer, []} -> {:noreply, [], buffer}
